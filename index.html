@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Drop Zone App</title>
+  <link rel="stylesheet" href="css/all.min.css" />
+  <link rel="stylesheet" href="css/drop_zone.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+      background: #0095ffa1;
+    }
+  </style>
+</head>
+<body>
+  <form method="post" id="formTest" enctype="multipart/form-data">
+    <div id="drop_zone" data-defaultMsg="Drag one or more files to this Drop Zone ..."></div>
+  </form>
+  <script src="js/drop_zone.js"></script>
+  <script>
+    dropZone({
+      multiple: true,
+      // paramName: 'sub_files',
+      // maxFiles: 6,
+      // maxFileSize: 2 * 1024 * 1024, //MB
+      // addDownloadinks: true,
+      // addRemoveLinks: true,
+      // addFileName: true,
+      // addFileSize: true,
+      // acceptedFiles: 'jpg, mp4',
+      // customeMaxFilesMsg: 'You can\'t upload more than 6 files',
+      // customeMaxFileSizeMsg: 'Sorry, but max file size must be 2MB',
+      // customeAcceptedFilesMsg: 'Sorry, but allowed extensions are ',
+      // oldFilesPath: "{{ $path }}",
+      // oldFilesID: "{{ $filesID }}",
+      // submitButtons: '.btn-success',
+      onUpload: function(newestFiles, drop_zone_input_files) {
+          console.log(newestFiles, drop_zone_input_files);
+      },
+      onDelete: function(fileID, drop_zone_input_files) {
+          console.log(fileID, drop_zone_input.files);
+      }
+    });
+  </script>
+</body>
+</html>
