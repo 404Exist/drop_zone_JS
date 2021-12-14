@@ -113,24 +113,12 @@ class DropZone {
     drop_zone.prepend(input);
     return input;
   }
-  printErrorMsg(theMsg = '') {
-    const vm = this;
-      var msgsELe = document.getElementById('drop_zone_errorMsgs');
-      if (msgsELe) {
-          msgsELe.innerHTML = theMsg;
-          document.getElementById('drop_zone_errorMsgs').className = "drop_zone_errorMsgs--show";
-      } else {
-          msgsELe = document.createElement('p');
-          msgsELe.setAttribute('class', 'drop_zone_errorMsgs--show');
-          msgsELe.setAttribute('id', 'drop_zone_errorMsgs');
-          msgsELe.innerHTML = theMsg;
-          drop_zone.prepend(msgsELe);
-      }
-      if (vm.data['removeMessageAfter']) {
-        setTimeout(() => {
-            document.getElementById('drop_zone_errorMsgs').className = "drop_zone_errorMsgs--remove";
-        }, vm.data['removeMessageAfter']);
-      }
+  dropHandler(e, vm) {
+    e.preventDefault();
+    vm.pushFileWithValidations(e.dataTransfer.items);
+  }
+  dragOverHandler(e) {
+    e.preventDefault();
   }
   pushFileWithValidations(files) {
       if (files) {
@@ -212,13 +200,6 @@ class DropZone {
       'onUpload' in this.data ? this.data['onUpload'](this.newestFiles, drop_zone_input.files) : '';
       this.getImageUrlBase64(this.newestFiles);
   }
-  dropHandler(e, vm) {
-      e.preventDefault();
-      vm.pushFileWithValidations(e.dataTransfer.items);
-  }
-  dragOverHandler(e) {
-      e.preventDefault();
-  }
   getImageUrlBase64(files, fileID = false) {
     const vm = this;
       function buildUi(file, fileID = false) {
@@ -282,14 +263,31 @@ class DropZone {
           buildUi(files, fileID);
       }
   }
-
   formatBytes(bytes, decimals = 2) {
       if (bytes === 0) return '0 Bytes';
       let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
           i = Math.floor(Math.log(bytes) / Math.log(1024));
       return parseFloat((bytes / Math.pow(1024, i)).toFixed(decimals)) + ' ' + sizes[i];
   }
-  
+  printErrorMsg(theMsg = '') {
+    const vm = this;
+      var msgsELe = document.getElementById('drop_zone_errorMsgs');
+      if (msgsELe) {
+          msgsELe.innerHTML = theMsg;
+          document.getElementById('drop_zone_errorMsgs').className = "drop_zone_errorMsgs--show";
+      } else {
+          msgsELe = document.createElement('p');
+          msgsELe.setAttribute('class', 'drop_zone_errorMsgs--show');
+          msgsELe.setAttribute('id', 'drop_zone_errorMsgs');
+          msgsELe.innerHTML = theMsg;
+          drop_zone.prepend(msgsELe);
+      }
+      if (vm.data['removeMessageAfter']) {
+        setTimeout(() => {
+            document.getElementById('drop_zone_errorMsgs').className = "drop_zone_errorMsgs--remove";
+        }, vm.data['removeMessageAfter']);
+      }
+  }
   deleteFile(el, lastModified, fileID, onDeleteFun) {
       if (confirm("Are you sure you want to remove this image ?")) {
           dropZoneFilesStore = dropZoneFilesStore.filter(
@@ -307,7 +305,6 @@ class DropZone {
           el.parentElement.remove();
       }
   }
-
   FileListItems(files) {
       var b = new ClipboardEvent("").clipboardData || new DataTransfer();
       for (var i = 0, len = files.length; i < len; i++) b.items.add(files[i]);
