@@ -28,7 +28,8 @@
     dropZone({
       multiple: true,
       // paramName: 'sub_files',
-      // maxFiles: 6,
+      // inputID: 'sub_files',
+      // maxFiles: 2,
       // maxFileSize: 2 * 1024 * 1024, //MB
       // addDownloadinks: true,
       // addRemoveLinks: true,
@@ -38,14 +39,15 @@
       // customeMaxFilesMsg: 'You can\'t upload more than 6 files',
       // customeMaxFileSizeMsg: 'Sorry, but max file size must be 2MB',
       // customeAcceptedFilesMsg: 'Sorry, but allowed extensions are ',
-      // oldFilesPath: "{{ $path }}",
-      // oldFilesID: "{{ $filesID }}",
+      // removeMessageAfter: 500, // time || false  default 2500
+      oldFilesPath: './oldFiles/Screenshot_5.png||./oldFiles/7.png',
+      oldFilesID: '1||2',
       // submitButtons: '.btn-success',
       onUpload: function(newestFiles, drop_zone_input_files) {
           console.log(newestFiles, drop_zone_input_files);
       },
       onDelete: function(fileID, drop_zone_input_files) {
-          console.log(fileID, drop_zone_input.files);
+          console.log(fileID, drop_zone_input_files);
       }
     });
   </script>
