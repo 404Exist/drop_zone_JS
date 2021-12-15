@@ -9,8 +9,8 @@
   min-height: 200px;
   position: relative;
   box-shadow: 1px 1px 7px black;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
   gap: 0.5%;
   row-gap: 10px;
 }
@@ -50,7 +50,6 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 33%;
   position: relative;
   overflow: hidden;
   justify-content: center;
@@ -135,3 +134,7 @@
   opacity: 0;
   transition: var(--main-transition);
 }
+
+
+@media (max-width: 1400px) {#drop_zone {grid-template-columns: 49.77% 49.77%;}}
+@media (max-width: 900px) { #drop_zone {grid-template-columns: 100%;}}
