@@ -64,7 +64,7 @@ class DropZone {
                     response.blob()
                 );
                 let metadata = {
-                    type: vm.data.type,
+                    type: data.type,
                 };
                 var createdFile = new File([data], theFile, metadata);
                 vm.getImageUrlBase64(createdFile, fileID);
