@@ -39,8 +39,8 @@
       // customeMaxFileSizeMsg: 'Sorry, but max file size must be 2MB',
       // customeAcceptedFilesMsg: 'Sorry, but allowed extensions are ',
       // removeMessageAfter: 500, // time || false  default 2500
-      oldFilesPath: './oldFiles/Screenshot_5.png||./oldFiles/7.png',
-      oldFilesID: '1||2',
+      oldFilesPath: ['./oldFiles/Screenshot_5.png ', './oldFiles/7.png'], // './oldFiles/Screenshot_5.png || ./oldFiles/7.png'
+      oldFilesID: '1 || 2', // [1, 2]
       // submitButtons: '.btn-success',
       onUpload: function(newestFiles, drop_zone_input_files) {
           console.log(newestFiles, drop_zone_input_files);

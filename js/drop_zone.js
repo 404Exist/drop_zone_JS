@@ -33,8 +33,8 @@ class DropZone {
     vm.data["customeMaxFilesMsg"] = "customeMaxFilesMsg" in vm.data ? vm.data["customeMaxFilesMsg"] : false;
     vm.data["customeMaxFileSizeMsg"] = "customeMaxFileSizeMsg" in vm.data ? vm.data["customeMaxFileSizeMsg"] : false;
     vm.data["customeAcceptedFilesMsg"] = "customeAcceptedFilesMsg" in vm.data ? vm.data["customeAcceptedFilesMsg"] : false;
-    vm.data["oldFilesPath"] = "oldFilesPath" in vm.data && vm.data["oldFilesPath"] != '' ? vm.data["oldFilesPath"].split("||") : false;
-    vm.data["oldFilesID"] = "oldFilesID" in vm.data && vm.data["oldFilesID"] != '' ? vm.data["oldFilesID"].split("||") : false;
+    vm.data["oldFilesPath"] = "oldFilesPath" in vm.data && vm.data["oldFilesPath"] != '' ? (Array.isArray(vm.data["oldFilesPath"]) ? vm.data["oldFilesPath"] : vm.data["oldFilesPath"].replaceAll(' ', '').split("||")) : false;
+    vm.data["oldFilesID"] = "oldFilesID" in vm.data && vm.data["oldFilesID"] != '' ? (Array.isArray(vm.data["oldFilesID"]) ? vm.data["oldFilesID"] : vm.data["oldFilesID"].replaceAll(' ', '').split("||")) : false;
     if (vm.data["acceptedFiles"]) {
         if (!Array.isArray(vm.data['acceptedFiles'])) {
             vm.data['acceptedFiles'] = vm.data["acceptedFiles"].replace(/\s/g,'');
@@ -57,8 +57,9 @@ class DropZone {
     }
 
     if (vm.data["oldFilesPath"]  && vm.data['oldFilesID']) {
+      console.log(vm.data["oldFilesPath"]);
         for (let i = 0; i < vm.data["oldFilesPath"].length; i++) {
-            async function createFile(path = vm.data["oldFilesPath"][i], fileID = vm.data["oldFilesID"][i]) {
+            async function createFile(path = vm.data["oldFilesPath"][i].replaceAll(' ', ''), fileID = vm.data["oldFilesID"][i].replaceAll(' ', '')) {
                 var theFile = path.split("/")[path.split("/").length -1];
                 let data = await fetch(path).then((response) =>
                     response.blob()
