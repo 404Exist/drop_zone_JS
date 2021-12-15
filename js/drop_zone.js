@@ -57,17 +57,11 @@ class DropZone {
     }
 
     if (vm.data["oldFilesPath"]  && vm.data['oldFilesID']) {
-      console.log(vm.data["oldFilesPath"]);
         for (let i = 0; i < vm.data["oldFilesPath"].length; i++) {
             async function createFile(path = vm.data["oldFilesPath"][i].replaceAll(' ', ''), fileID = vm.data["oldFilesID"][i].replaceAll(' ', '')) {
                 var theFile = path.split("/")[path.split("/").length -1];
-                let data = await fetch(path).then((response) =>
-                    response.blob()
-                );
-                let metadata = {
-                    type: data.type,
-                };
-                var createdFile = new File([data], theFile, metadata);
+                let data = await fetch(path).then(response => response.blob());
+                var createdFile = new File([data], theFile, { type: data.type });
                 vm.getImageUrlBase64(createdFile, fileID);
             }
             createFile();
